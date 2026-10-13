@@ -6,7 +6,7 @@ pipeline{
            sh '''
                  apt update -y
                  apt upgrade -y
-                 apt install vim sudo docker.io docker-compose -y
+                 apt install vim sshpass sudo docker.io docker-compose -y
                  service docker start
                  service docker status
             '''
@@ -21,14 +21,27 @@ pipeline{
           }
        }
    }
-   stage(' Deploy on Production Server '){
-      steps{
-        script {
-                 sshagent(['prodserver222']) {
-                     sh "ssh -o StrictHostKeyChecking=no root@103.216.171.220 docker run  -p 3000:80 -d oklabs/myimage:${BUILD_NUMBER}"
-                 }
-             }
-         }
-      }
+   stage('Deploy on Production Server') {
+    steps {
+        withCredentials([
+            usernamePassword(
+                credentialsId: 'prodserver222',
+                usernameVariable: 'SSH_USER',
+                passwordVariable: 'SSH_PASS'
+            )
+        ]) {
+            sh '''
+                set +x
+
+                # Deploy the Docker container
+                sshpass -p "$SSH_PASS" ssh \
+                    -o StrictHostKeyChecking=no \
+                    -o UserKnownHostsFile=/dev/null \
+                    "$SSH_USER@103.216.171.220" \
+                    "docker run -d -p 3000:80 oklabs/myimage:${BUILD_NUMBER}"
+            '''
+        }
+    }
+}
    }
 }
