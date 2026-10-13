@@ -3,7 +3,11 @@ pipeline{
    stages{
      stage(""){
         steps{
-           sh 'whoami';
+           sh '''
+                 apt update -y
+                 apt upgrade -y
+                 apt install vim sudo docker.io docker-compose -y
+            '''
         }
      }
    }
