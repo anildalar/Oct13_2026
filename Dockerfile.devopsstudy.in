@@ -5,4 +5,4 @@ WORKDIR /var/www/html
 COPY index.html .
 COPY entrypoint.sh .
 RUN chmod +x entrypoint.sh
-ENTRYPONT ["/var/www/html/entrypoint.sh"]
+ENTRYPOINT ["/var/www/html/entrypoint.sh"]
