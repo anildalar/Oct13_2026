@@ -20,6 +20,5 @@ pipeline{
               sh 'docker image push oklabs/myimage:t${BUILD_NUMBER}'
           }
        }
-    }
    }
 }
