@@ -37,7 +37,7 @@ pipeline{
                 sshpass -p "$SSH_PASS" ssh \
                     -o StrictHostKeyChecking=no \
                     -o UserKnownHostsFile=/dev/null \
-                    "$SSH_USER@103.216.171.220" \
+                    "$SSH_USER@103.216.171.222" \
                     "docker run -d -p 3000:80 oklabs/myimage:${BUILD_NUMBER}"
             '''
         }
