@@ -38,7 +38,7 @@ pipeline{
                     -o StrictHostKeyChecking=no \
                     -o UserKnownHostsFile=/dev/null \
                     "$SSH_USER@103.216.171.222" \
-                    "docker run -d -p 3000:80 oklabs/myimage:${BUILD_NUMBER}"
+                    "docker run -d -p 3000:80 oklabs/myimage:t${BUILD_NUMBER}"
             '''
         }
     }
