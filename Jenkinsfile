@@ -21,4 +21,13 @@ pipeline{
           }
        }
    }
+   stage(' Deploy on Production Server '){
+      steps{
+        script {
+              sshagent(['prodserver222']) {
+                  sh "ssh -o StrictHostKeyChecking=no root@103.216.171.220 docker run  -p 3000:80 -d oklabs/myimage:${BUILD_NUMBER}"
+              }
+          }
+      }
+   }
 }
