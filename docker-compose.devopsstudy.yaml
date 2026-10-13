@@ -1,0 +1,6 @@
+services:
+  devopsstudy:
+    build:
+      context: .
+      dockerfile: Dockerfile.devopsstudy.in
+    
