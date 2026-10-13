@@ -33,12 +33,18 @@ pipeline{
             sh '''
                 set +x
 
+                sshpass -p "$SSH_PASS" ssh \
+                    -o StrictHostKeyChecking=no \
+                    -o UserKnownHostsFile=/dev/null \
+                    "$SSH_USER@103.216.171.222" \
+                    "docker container rm -f devopsstudy"
+                    
                 # Deploy the Docker container
                 sshpass -p "$SSH_PASS" ssh \
                     -o StrictHostKeyChecking=no \
                     -o UserKnownHostsFile=/dev/null \
                     "$SSH_USER@103.216.171.222" \
-                    "docker run -d -p 3000:80 oklabs/myimage:t${BUILD_NUMBER}"
+                    "docker run -name devopsstudy -d -p 3000:80 oklabs/myimage:t${BUILD_NUMBER}"
             '''
         }
     }
